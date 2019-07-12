@@ -41,6 +41,35 @@
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
+//
+// The capitalized first letter is convention letting other programmers know that a constructer function is created.
+function GameObject(gameObj){ //A GameObject constructor function is created.
+  this.createdAt = gameObj.createdAt;
+  this.name = gameObj.name;
+  this.dimensions = gameObj.dimensions;
+  this.destroy = function() { // This creates the destroy method
+    return `${this.name} was removed from the game.`;  //
+  };
+}
+
+function CharacterStats(charStats){   //  A CharacterStats constructer function is created.
+  GameObject.call(this, charStats); // Explicitly binds the CharacterStats object to the GameObject object.
+  this.healthPoints = charStats.healthPoints;
+  this.takeDamage = function(){   // A takeDamage method is created.
+    return `${this.name} took damage.`;
+  };
+}
+
+function Humanoid(humAttr){  // A Humanoid constructer function is created.
+  CharacterStats.call(this, humAttr); // explcit binding to CharacterStats object.
+  this.team = humAttr.team;
+  this.weapons = humAttr.weapons;
+  this.language = humAttr.language;
+  this.greet = function() {
+    return `${this.name} offers a greeting in ${this.language}`;
+  }
+}
+
 
   const mage = new Humanoid({
     createdAt: new Date(),
@@ -91,17 +120,16 @@
     ],
     language: 'Elvish',
   });
-
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
-  console.log(swordsman.healthPoints); // 15
+  console.log(mage.healthPoints); // 15
   console.log(mage.name); // Bruce
   console.log(swordsman.team); // The Round Table
   console.log(mage.weapons); // Staff of Shamalama
   console.log(archer.language); // Elvish
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
-  console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
+  console.log(mage.destroy()); // Sir Mustachio was removed from the game.
 
 
   // Stretch task:
