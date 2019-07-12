@@ -47,29 +47,33 @@ function GameObject(gameObj){ //A GameObject constructor function is created.
   this.createdAt = gameObj.createdAt;
   this.name = gameObj.name;
   this.dimensions = gameObj.dimensions;
-  this.destroy = function() { // This creates the destroy method
-    return `${this.name} was removed from the game.`;  //
-  };
 }
+
+GameObject.prototype.destroy = function() { // This creates the destroy method
+  return `${this.name} was removed from the game.`;
+};
 
 function CharacterStats(charStats){   //  A CharacterStats constructer function is created.
   GameObject.call(this, charStats); // Explicitly binds the CharacterStats object to the GameObject object.
   this.healthPoints = charStats.healthPoints;
-  this.takeDamage = function(){   // A takeDamage method is created.
-    return `${this.name} took damage.`;
-  };
 }
+CharacterStats.prototype = Object.create(GameObject.prototype);
+CharacterStats.prototype.takeDamage = function(){
+   return `${this.name} took damage.`;
+};
+
 
 function Humanoid(humAttr){  // A Humanoid constructer function is created.
   CharacterStats.call(this, humAttr); // explcit binding to CharacterStats object.
   this.team = humAttr.team;
   this.weapons = humAttr.weapons;
   this.language = humAttr.language;
-  this.greet = function() {
-    return `${this.name} offers a greeting in ${this.language}`;
-  }
 }
 
+Humanoid.prototype = Object.create(CharacterStats.prototype);  //
+Humanoid.prototype.greet = this.greet = function() {  //  A prototype function is created
+  return `${this.name} offers a greeting in ${this.language}`;
+};
 
   const mage = new Humanoid({
     createdAt: new Date(),
